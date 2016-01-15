@@ -13,4 +13,5 @@ cabal.sandbox.config
 *.prof
 *.aux
 *.hp
+*.swp
 .stack-work/
