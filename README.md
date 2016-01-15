@@ -1,5 +1,7 @@
 # hwk
 
+<img align="right" alt="hwk" src="hwk.png" />
+
 I often write small shell scripts and when operating on streams of data
 **awk** is a really powerful tool. But it is from the 1970s and
 **hwk** should demonstrate how a modern **awk** replacement could look like.
