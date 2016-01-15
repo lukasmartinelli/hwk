@@ -2,10 +2,9 @@
 
 <img align="right" alt="hwk" src="hwk.png" />
 
-
 I often write small shell scripts and when operating on streams of data
-**awk** is a really powerful tool. But it is from the 1970s and
-**hwk** should demonstrate how a modern **awk** replacement could look like.
+[awk](https://en.wikipedia.org/wiki/AWK) is a really powerful tool. But it is from the 1970s and
+**hwk** should demonstrate how a modern Haskell based replacement could look like.
 
 ## Example
 
@@ -13,7 +12,7 @@ Sum all negative numbers. The `negative` function is defined as normal bash vari
 that is passed to `hwk`.
 
 ```bash
-seq 1 100 \
+seq -100 100 \
   | negative='0 >' \
     hwk 'filter negative' \
   | hwk 'foldl (+) 0'
@@ -21,6 +20,12 @@ seq 1 100 \
 
 The Haskell expression passed to `hwk` can only receive one parameter.
 In the example above `negative` is a partially applied function.
+
+## What `hwk` do?
+
+- `hwk` will parse the expression a Haskell AST, generate code and compile it on the fly into a executable binary.
+- `hwk` will try to lookup functions in the passed environment variables.
+- `hwk` will try to figure out the types needed for your functions to work with the input.
 
 ## What happens under the Hood?
 
