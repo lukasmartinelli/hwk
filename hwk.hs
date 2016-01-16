@@ -27,6 +27,9 @@ parse [stmt] = do
     executeFile "runhaskell" True [tempFile] Nothing
 
 extensions = "{-# LANGUAGE FlexibleInstances, TypeSynonymInstances #-}"
+imports = unlines [ "import Data.List.Split"
+                  , "import Data.List"
+                  ]
 genMain fname = "main = getContents >>= \\contents -> " ++
                 "mapM_ putStrLn $ toList $ " ++ fname ++ " $ lines contents"
 
@@ -35,6 +38,7 @@ toList = unlines [ "class ToList a where toList :: a -> [String]"
                  , "instance ToList String where toList x = [x]"
                  , "instance ToList [Integer] where toList lst = map (\\x -> show x) lst"
                  , "instance ToList [String] where toList = id"
+                 , "instance ToList [[String]] where toList = map (intercalate \"\\t\")"
                  ]
 
 toInt = unlines [ "int str = read str :: Integer"
@@ -44,7 +48,7 @@ toInt = unlines [ "int str = read str :: Integer"
 libraryFunctions = [toInt, toList]
 genFunction fname stmt = fname ++ " = " ++ stmt
 genHwkFunction fname stmt = genFunction fname stmt
-genModule functions stmt = unlines $ [extensions, genHwkFunction "hwk" stmt, genMain "hwk"] ++
+genModule functions stmt = unlines $ [extensions, imports, genHwkFunction "hwk" stmt, genMain "hwk"] ++
                            functions ++  libraryFunctions
 
 exit    = exitSuccess

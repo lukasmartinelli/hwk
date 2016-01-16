@@ -21,10 +21,14 @@ eval $(hwk env negative '(0 >)')
 # the ints function transforms a list of strings into a list of ints
 seq -100 100 \
   | hwk '\lines -> filter negative $ ints lines' \
-  | hwk '\lines -> foldl (+) 0 $ ints lines'
+  | hwk '\lines -> sum $ ints lines'
+
+# get first two columns of tsv file
+cat data.tsv |
+  | hwk '\lines -> map (take 2) $ map (splitOn "\t") lines'
 ```
 
-The argument passed to `hwk` must be a valid Haskell statement. It should always return a fucntion that takes takes a list of strings and returns either a new list or a single element.
+The argument passed to `hwk` must be a valid Haskell statement. It should always return a function that takes a list of strings and returns either a new list or a single element.
 The `hwk env` command loads the statement into the environment with the specified function name for later reuse.
 
 ## Install
@@ -44,16 +48,17 @@ cabal install
 
 ## What does `hwk` do?
 
-- `hwk` will generate code and execute it under `runhaksell`
+- `hwk` will generate code and execute it under `runhaskell`.
 - `hwk` will try to lookup functions in the passed environment variables.
-- `hwk` tries to convert the different result types into a list of strings `[String]`
-- `hwk` provides additional functions that help with converting streams
+- `hwk` tries to convert the different result types into a list of strings `[String]`.
+- `hwk` provides additional functions that help with converting streams.
 
 ## Supported return types
 
 The `hwk` statement can return the following types.
 
 - `[String]`
+- `[[String]]`
 - `[Integer]`
 - `String`
 - `Integer`
