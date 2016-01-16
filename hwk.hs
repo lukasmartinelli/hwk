@@ -26,14 +26,26 @@ parse [stmt] = do
     writeFile tempFile $ genModule (envFunctions envs) stmt
     executeFile "runhaskell" True [tempFile] Nothing
 
+extensions = "{-# LANGUAGE FlexibleInstances, TypeSynonymInstances #-}"
 genMain fname = "main = getContents >>= \\contents -> " ++
-                "mapM_ putStrLn $ " ++ fname ++ " $ lines contents"
+                "mapM_ putStrLn $ toList $ " ++ fname ++ " $ lines contents"
 
+toList = unlines [ "class ToList a where toList :: a -> [String]"
+                 , "instance ToList Integer where toList x = [show x]"
+                 , "instance ToList String where toList x = [x]"
+                 , "instance ToList [Integer] where toList lst = map (\\x -> show x) lst"
+                 , "instance ToList [String] where toList = id"
+                 ]
+
+toInt = unlines [ "int str = read str :: Integer"
+                , "ints = map int"
+                ]
+
+libraryFunctions = [toInt, toList]
 genFunction fname stmt = fname ++ " = " ++ stmt
-genModule functions stmt = unlines $ functions ++ [genHwkFunction "hwk" stmt, genMain "hwk"]
-genHwkFunction fname stmt = unlines [ fname ++ " :: [String] -> [String]"
-                                    , genFunction fname stmt
-                                    ]
+genHwkFunction fname stmt = genFunction fname stmt
+genModule functions stmt = unlines $ [extensions, genHwkFunction "hwk" stmt, genMain "hwk"] ++
+                           functions ++  libraryFunctions
 
 exit    = exitSuccess
 die     = exitWith (ExitFailure 1)

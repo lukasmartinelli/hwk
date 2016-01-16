@@ -14,16 +14,17 @@ reuse in environment variables.
 # prepend a string to each line
 seq 1 10 | hwk 'map ("number " ++)'
 
-# sum all negative numbers.
-eval $(hwk env ints 'map (\l -> read l :: Int)')
+# sum all negative numbers
+# the ints function transforms a list of strings into a list of ints
 seq -100 100 \
   | hwk '\lines -> filter (0 >) $ ints lines' \
-  | hwk '\lines -> [foldl (+) 0 $ ints lines]}'
+  | hwk '\lines -> foldl (+) 0 $ ints lines'
+
+eval $(hwk env negative '(0 >)')
 ```
 
-The `hwk env` command loads the statement as `ints` function into the environment for later reuse.
-The argument passed to `hwk` must be a valid Haskell statement.
-It should always return a fucntion that takes takes a list of strings and returns a new list `[String] -> [String]`.
+The argument passed to `hwk` must be a valid Haskell statement. It should always return a fucntion that takes takes a list of strings and returns either a new list or a single element.
+The `hwk env` command loads the statement into the environment with the specified function name for later reuse.
 
 ## Install
 
@@ -45,6 +46,15 @@ cabal install
 - `hwk` will generate code and execute it under `runhaksell`
 - `hwk` will try to lookup functions in the passed environment variables.
 - `hwk` provides additional functions that help with converting streams
+
+## Supported return types
+
+The `hwk` statement can return the following types.
+
+- `[String]`
+- `[Integer]`
+- `String`
+- `Integer`
 
 ## What happens under the Hood?
 
