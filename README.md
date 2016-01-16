@@ -2,14 +2,19 @@
 
 <img align="right" alt="hwk" src="hwk.png" />
 
-[awk](https://en.wikipedia.org/wiki/AWK) is a really powerful tool when operating on streams
-of data. **hwk** tries to demonstrate how a modern Haskell based stream tool could look like.
+**hwk** tries to demonstrate how a modern Haskell based stream manipulation tool could look like.
+It is similar to tools like **awk** or **sed**.
+`hwk` allows compact command sequences that operate on a list of strings. Because Haskell is lazy and has most functions you'll ever need there is no need to invent another small DSL and hopefully
+push people into using functional goodness. `hwk` also provides a method to store small functions for
+reuse in environment variables.
 
 ## Example
 
-Sum all negative numbers.
-
 ```bash
+# prepend a string to each line
+seq 1 10 | hwk 'map ("number " ++)'
+
+# sum all negative numbers.
 eval $(hwk env ints 'map (\l -> read l :: Int)')
 seq -100 100 \
   | hwk '\lines -> filter (0 >) $ ints lines' \
@@ -17,8 +22,23 @@ seq -100 100 \
 ```
 
 The `hwk env` command loads the statement as `ints` function into the environment for later reuse.
-The argument passed to `hwk` are valid Haskell statements. They should always
-return a function that takes takes a list of strings and returns a new list `[String] -> [String]`.
+The argument passed to `hwk` must be a valid Haskell statement.
+It should always return a fucntion that takes takes a list of strings and returns a new list `[String] -> [String]`.
+
+## Install
+
+To install `hwk` locally you need [Haskell](https://www.haskell.org/platform/) and
+the [stack build tool](http://docs.haskellstack.org/en/stable/install_and_upgrade.html).
+You can build the binary with stack or cabal.
+
+```bash
+git clone https://github.com/lukasmartinelli/hwk
+cd hwk
+stack build
+
+# or with cabal
+cabal install
+```
 
 ## What does `hwk` do?
 
@@ -49,3 +69,9 @@ main = do
     contents <- getContents
     mapM_ putStrLn $ map (\r -> show r) $ hwk $ lines contents
 ```
+
+## Alternatives
+
+- https://code.google.com/p/pyp/
+- https://en.wikipedia.org/wiki/AWK
+- https://en.wikipedia.org/wiki/Sed
