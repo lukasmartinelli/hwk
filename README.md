@@ -1,4 +1,4 @@
-# hwk
+# hwk [![Build Status](https://travis-ci.org/lukasmartinelli/hwk.svg?branch=master)](https://travis-ci.org/lukasmartinelli/hwk) ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
 
 <img align="right" alt="hwk" src="hwk.png" />
 
