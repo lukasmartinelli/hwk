@@ -90,6 +90,7 @@ main = do
 
 ## Alternatives
 
+- https://github.com/gelisam/hawk
 - https://code.google.com/p/pyp/
 - https://en.wikipedia.org/wiki/AWK
 - https://en.wikipedia.org/wiki/Sed
