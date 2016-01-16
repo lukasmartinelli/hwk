@@ -3,7 +3,7 @@
 <img align="right" alt="hwk" src="hwk.png" />
 
 [awk](https://en.wikipedia.org/wiki/AWK) is a really powerful tool when operating on streams
-of data. **hwk** tries to demonstrate how a modern Haskell based replacement could look like.
+of data. **hwk** tries to demonstrate how a modern Haskell based stream tool could look like.
 
 ## Example
 
@@ -22,9 +22,9 @@ return a function that takes takes a list of strings and returns a new list `[St
 
 ## What does `hwk` do?
 
-- `hwk` will parse the Haskell statement, generate code and compiles it on the fly into a executable binary that can then later be reused.
+- `hwk` will generate code and execute it under `runhaksell`
 - `hwk` will try to lookup functions in the passed environment variables.
-- `hwk` provides some additional functions that work well with streams
+- `hwk` provides additional functions that help with converting streams
 
 ## What happens under the Hood?
 

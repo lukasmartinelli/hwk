@@ -6,8 +6,6 @@ import System.Posix.Process (executeFile)
 import System.Posix.Temp (mkdtemp)
 import Data.List (isPrefixOf)
 
-import Hwk.Generate (genFunction, genModule)
-
 main :: IO ()
 main = getArgs >>= parse
 
@@ -27,6 +25,15 @@ parse [stmt] = do
     let tempFile = tempDir ++ "/hwk.hs"
     writeFile tempFile $ genModule (envFunctions envs) stmt
     executeFile "runhaskell" True [tempFile] Nothing
+
+genMain fname = "main = getContents >>= \\contents -> " ++
+                "mapM_ putStrLn $ " ++ fname ++ " $ lines contents"
+
+genFunction fname stmt = fname ++ " = " ++ stmt
+genModule functions stmt = unlines $ functions ++ [genHwkFunction "hwk" stmt, genMain "hwk"]
+genHwkFunction fname stmt = unlines [ fname ++ " :: [String] -> [String]"
+                                    , genFunction fname stmt
+                                    ]
 
 exit    = exitSuccess
 die     = exitWith (ExitFailure 1)
