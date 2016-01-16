@@ -8,6 +8,9 @@ It is similar to tools like **awk** or **sed**.
 push people into using functional goodness. `hwk` also provides a method to store small functions for
 reuse in environment variables.
 
+> Please take a look at **[Hawk](https://github.com/gelisam/hawk)**.
+  While **hwk** is a hacky MVP to test how well Haskell works as text processing language, **Hawk** is a more mature tool.
+  
 ## Example
 
 ```bash
