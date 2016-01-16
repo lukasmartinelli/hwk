@@ -14,20 +14,11 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Hwk.Parse
-  build-depends:       base >=4.8, haskell-src-exts >=1.17, hint >= 0.4
-
-executable hwk
-  hs-source-dirs:      src
-  main-is:             Main.hs
-  exposed-modules:     Hwk.Parse
-  build-depends:       base >=4.8, haskell-src-exts >=1.17, hint >= 0.4
+  exposed-modules:     Hwk.Generate
+  build-depends:       base >=4.8, unix
   default-language:    Haskell2010
 
-test-suite hwk-tests
-  hs-source-dirs:      test
-  type:                exitcode-stdio-1.0
-  main-is:             Spec.hs
-  build-depends:       base >=4.8, haskell-src-exts >=1.17,
-                       hspec >= 1.3, hwk
+executable hwk
+  main-is:             hwk.hs
+  build-depends:       base >=4.8, unix, hwk
   default-language:    Haskell2010

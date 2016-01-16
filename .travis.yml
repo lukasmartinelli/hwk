@@ -1,0 +1,4 @@
+ghc: 7.4
+script:
+  - cabal install
+  - seq 1 10 | hwk 'map ("Number " ++)'
