@@ -14,5 +14,5 @@ cabal-version:       >=1.10
 
 executable hwk
   main-is:             hwk.hs
-  build-depends:       base >=4.8, unix
+  build-depends:       base >=4.8, unix >= 2.7
   default-language:    Haskell2010
