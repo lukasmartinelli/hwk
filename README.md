@@ -14,13 +14,14 @@ reuse in environment variables.
 # prepend a string to each line
 seq 1 10 | hwk 'map ("number " ++)'
 
+# load the negative function into the current environment
+eval $(hwk env negative '(0 >)')
+
 # sum all negative numbers
 # the ints function transforms a list of strings into a list of ints
 seq -100 100 \
-  | hwk '\lines -> filter (0 >) $ ints lines' \
+  | hwk '\lines -> filter negative $ ints lines' \
   | hwk '\lines -> foldl (+) 0 $ ints lines'
-
-eval $(hwk env negative '(0 >)')
 ```
 
 The argument passed to `hwk` must be a valid Haskell statement. It should always return a fucntion that takes takes a list of strings and returns either a new list or a single element.
@@ -45,6 +46,7 @@ cabal install
 
 - `hwk` will generate code and execute it under `runhaksell`
 - `hwk` will try to lookup functions in the passed environment variables.
+- `hwk` tries to convert the different result types into a list of strings `[String]`
 - `hwk` provides additional functions that help with converting streams
 
 ## Supported return types
