@@ -24,7 +24,7 @@ seq -100 100 \
   | hwk '\lines -> sum $ ints lines'
 
 # get first two columns of tsv file
-# use `cabal install split` to use the library for splitting lists
+# `cabal install split` to use the library for splitting lists
 cat data.tsv |
   | hwk '\lines -> map (take 2) $ map (splitOn "\t") lines'
 ```
