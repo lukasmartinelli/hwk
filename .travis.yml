@@ -2,5 +2,6 @@ language: haskell
 ghc: 7.8
 script:
   - cabal install
+  - cabal install split
   - seq 1 10 | hwk 'map ("number " ++)'
   - eval $(hwk env negative '(0 >)') && seq -100 100 | hwk '\lines -> filter negative $ ints lines' | hwk '\lines -> foldl (+) 0 $ ints lines'
