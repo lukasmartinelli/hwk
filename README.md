@@ -1,5 +1,8 @@
 # hwk [![Build Status](https://travis-ci.org/lukasmartinelli/hwk.svg?branch=master)](https://travis-ci.org/lukasmartinelli/hwk) ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
 
+> :warning: Please use **[Hawk](https://github.com/gelisam/hawk)**.
+  While **hwk** is a hacky MVP to test how well Haskell works as text processing language, **Hawk** is a more mature tool. This repository is no longer maintained by Lukas Martinelli.
+  
 <img align="right" alt="hwk" src="hwk.png" />
 
 **hwk** tries to demonstrate how a modern Haskell based stream manipulation tool could look like.
@@ -8,9 +11,6 @@ It is similar to tools like **awk** or **sed**.
 push people into using functional goodness. `hwk` also provides a method to store small functions for
 reuse in environment variables.
 
-> Please take a look at **[Hawk](https://github.com/gelisam/hawk)**.
-  While **hwk** is a hacky MVP to test how well Haskell works as text processing language, **Hawk** is a more mature tool.
-  
 ## Example
 
 ```bash
